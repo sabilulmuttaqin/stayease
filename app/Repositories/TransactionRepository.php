@@ -54,7 +54,7 @@ class transactionRepository implements transactionRepositoryInterface
         $subtotal = $price * $duration;
         $tax = $subtotal * 0.11;
         $insurance = $subtotal * 0.1;
-        return $subtotal + $tax + $duration;
+        return $subtotal + $tax + $insurance;
     }
     public function calcultePayment($total, $paymentMethod)
     {
