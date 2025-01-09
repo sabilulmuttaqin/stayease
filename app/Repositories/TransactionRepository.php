@@ -29,7 +29,7 @@ class transactionRepository implements transactionRepositoryInterface
         $boarding = BoardingHouse::find($data['address']);
 
         $data['room_id'] = $room->id;
-        // $data['address'] = $data['address'];
+        $data['address'] = $data['address'];
         $data = $this->prepareDataTransaction($data, $room);
         $transaction = Transaction::create($data);
         session()->forget('transaction');
