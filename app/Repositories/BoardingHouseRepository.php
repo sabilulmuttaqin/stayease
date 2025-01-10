@@ -43,14 +43,6 @@ class boardingHouseRepository implements boardingHouseRepositoryInterface
         })->get();
     }
 
-    // public function getBoardingHouseByCitySlug($slug)
-    // {
-    //     return City::where('slug', $slug)
-    //         ->with('boarding_houses') // Memuat relasi boarding_houses
-    //         ->first()?->boarding_houses ?? collect();
-    // }
-
-
     public function getBoardingHouseByCategorySlug($slug)
     {
         return BoardingHouse::whereHas('category', function (Builder $query) use ($slug) {

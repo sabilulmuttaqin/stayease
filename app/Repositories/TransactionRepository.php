@@ -47,9 +47,7 @@ class transactionRepository implements transactionRepositoryInterface
         $data['code'] = Transaction::generateUniqueTrxId();
         $data['payment_status'] = 'pending';
         $data['transaction_date'] = now();
-        // $room = $data['room'];
 
-        // dd($this->getTransactionDataFromSession());
         $total = $this->calculteTotalAmount($room->price_per_month, $data['duration']);
         $data['total_amount'] = $this->calcultePayment($total, $data['payment_method']);
 

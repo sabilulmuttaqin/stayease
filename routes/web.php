@@ -8,9 +8,7 @@ use App\Http\Controllers\FindController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/check-booking', [BookingController::class, 'checkBooking'])->name('check-booking');
 Route::post('/check-booking', [BookingController::class, 'showBooking'])->name('show-booking');
