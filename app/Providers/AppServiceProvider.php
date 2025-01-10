@@ -10,6 +10,7 @@ use App\Repositories\Contract\categoryRepositoryInterface;
 use App\Repositories\Contract\cityRepositoryInterface;
 use App\Repositories\Contract\transactionRepositoryInterface;
 use App\Repositories\TransactionRepository;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -30,6 +31,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        if (str_contains(request()->url(), 'ngrok-free.app')) {
+            URL::forceScheme('https');
+        }
     }
 }

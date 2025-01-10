@@ -51,12 +51,13 @@ class TransactionResource extends Resource
                         "down_payment" => "Down Payment",
                         "full_payment" => "Full Payment",
                     ]),
-                Forms\Components\Select::make('payment_status')
+                Forms\Components\TextInput::make('payment_status')
                     ->required()
-                    ->options([
-                        "done" => "Done",
-                        "not_yet" => "Not Yet",
-                    ]),
+                    ->maxLength(255),
+                // ->options([
+                //     "done" => "Done",
+                //     "not_yet" => "Not Yet",
+                // ]),
                 Forms\Components\TextInput::make('duration')
                     ->required()
                     ->numeric(),

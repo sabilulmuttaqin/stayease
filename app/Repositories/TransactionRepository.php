@@ -35,10 +35,17 @@ class transactionRepository implements transactionRepositoryInterface
         session()->forget('transaction');
         return $transaction;
     }
+
+    public function getDataTransactionByCode($code)
+    {
+        return Transaction::where('code', $code)->first();
+    }
+
+
     public function prepareDataTransaction($data, $room)
     {
         $data['code'] = Transaction::generateUniqueTrxId();
-        $data['payment_status'] = 'not_yet';
+        $data['payment_status'] = 'pending';
         $data['transaction_date'] = now();
         // $room = $data['room'];
 
@@ -59,5 +66,10 @@ class transactionRepository implements transactionRepositoryInterface
     public function calcultePayment($total, $paymentMethod)
     {
         return $paymentMethod === 'full_payment' ? $total : $total * 0.3;
+    }
+
+    public function getBookingTransactionByCodeEmailPhone($code, $email, $phone_number)
+    {
+        return Transaction::where('code', $code)->where('email', $email)->where('phone_number', $phone_number)->first();
     }
 }

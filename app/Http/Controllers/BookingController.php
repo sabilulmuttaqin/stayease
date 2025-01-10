@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DetailsBookingRequest;
 use App\Http\Requests\StoreCustomerDetailRequest;
 use App\Repositories\Contract\boardingHouseRepositoryInterface;
 use App\Repositories\Contract\categoryRepositoryInterface;
@@ -25,6 +26,17 @@ class BookingController extends Controller
     public function checkBooking()
     {
         return view('pages.booking');
+    }
+
+    public function showBooking(DetailsBookingRequest $request)
+    {
+        $transaction = $this->transactionRepository->getBookingTransactionByCodeEmailPhone($request->code, $request->email, $request->phone_number);
+
+        if (!$transaction) {
+            return redirect()->back()->withErrors('error', 'Data transaksi tidak ditemukan');
+        }
+
+        return view('pages.booking.bookingDetails', compact('transaction'));
     }
     public function booking(Request $req, $slug)
     {
@@ -50,6 +62,14 @@ class BookingController extends Controller
         return redirect()->route('booking.checkout', $slug);
     }
 
+    public function success(Request $request)
+    {
+        $transaction = $this->transactionRepository->getDataTransactionByCode($request->order_id);
+        // dd($transaction);
+        return view('pages.booking.success', compact('transaction'));
+    }
+
+
     public function checkout($slug)
     {
         $transaction = $this->transactionRepository->getTransactionDataFromSession();
@@ -73,7 +93,7 @@ class BookingController extends Controller
 
         $params = [
             'transaction_details' => [
-                'order_id' => $transaction->id,
+                'order_id' => $transaction->code,
                 'gross_amount' => $transaction->total_amount,
             ],
             'customer_details' => [
